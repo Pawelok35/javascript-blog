@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 const titleClickHandler = function (event) {
   /// wyrazenie funkcyjne const title...
