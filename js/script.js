@@ -43,6 +43,7 @@ const optArticleSelector = ".post",
 function generateTitleLinks() {
   /* remove contents of titleList */
   const titleList = document.querySelector(optTitleListSelector);
+ 
   function clearElement() {
     titleList.innerHTML = "";
   }
@@ -84,8 +85,8 @@ function generateTitleLinks() {
 generateTitleLinks();
 
 function generateTags() {
-  
-  
+
+
   /* 1. find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
   console.log(articles);
@@ -93,8 +94,8 @@ function generateTags() {
   for (let article of articles) {
     console.log(article);
     /* 3. find tags wrapper */
-    const titleList = article.querySelector(optArticleTagsSelector); /// looking for wrapper tags in every article.
-    console.log(titleList);
+    const tagWrapper = article.querySelector(optArticleTagsSelector); /// looking for wrapper tags in every article.
+    console.log(tagWrapper);
     /* 4. make html variable with empty string */
     let html = "";
 
@@ -108,8 +109,6 @@ function generateTags() {
     for (let tag of articleTagsArray) {
       /// tag will be text for single tag
       console.log(tag);
-      const singleTag = tag;
-      console.log(singleTag);
       /* 8. generate HTML of the link */
       const linkHTML =
         '<li><a href="#tag-' + tag + '"><span>' + tag + "</span></a></li>";
@@ -119,7 +118,7 @@ function generateTags() {
       /* 10. END LOOP: for each tag */
     }
     /* 11. insert HTML of all the links into the tags wrapper */
-    titleList.innerHTML = html;
+    tagWrapper.innerHTML = html;
     /* 12. END LOOP: for every article: */
   }
 }
