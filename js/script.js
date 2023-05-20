@@ -107,12 +107,12 @@ function generateTags() {
     const articleTagsArray = articleTags.split(" ");
     console.log(articleTagsArray);
     /* 7. START LOOP: for each tag */
-    for (let tag of articleTagsArray) {
+    for (let articleTagArray of articleTagsArray) {
       /// tag will be text for single tag
-      console.log(tag);
+      console.log(articleTagArray);
       /* 8. generate HTML of the link */
       const linkHTML =
-        '<li><a href="#tag-' + tag + '"><span>' + tag + "</span></a></li>";
+        '<li><a href="#tag-' + articleTagArray + '"><span>' + articleTagArray + "</span></a></li>";
       console.log(linkHTML);
       /* 9. add generated code to html variable */
       html = html + linkHTML;
@@ -186,7 +186,7 @@ for (let article of articles) {
   const articleAuthors = article.getAttribute("data-author");
   console.log(articleAuthors);
     const linkHTML =
-      '<li><p post-author ="by ' + articleAuthors + '"></a></li>';
+      '<a href="#author' + articleAuthors + '"><span>' + articleAuthors + "</span></a></li>";
     console.log(linkHTML);
   authorWrapper.innerHTML = linkHTML;
   console.log(authorWrapper);
@@ -199,6 +199,8 @@ function authorClickHandler(event){
 const clickedElement = this;
 const authors = clickedElement.getAttribute("data-author");
 console.log(authors);
+const author = authors.replace("#author", "");
+  console.log(author);
 for (let author of authors) {  
   author.classList.remove("active");
 }
