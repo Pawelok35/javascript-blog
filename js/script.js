@@ -88,3 +88,48 @@ function generateTitleLinks(customSelector = "") {
 }
 generateTitleLinks();
 
+function generateTags() {
+  /* 1. find all articles */
+  const articles = document.querySelectorAll(optArticleSelector);
+  console.log(articles);
+
+  /* 2. START LOOP: for every article: */
+  for (let article of articles) {
+    console.log(article);
+
+    /* 3. find tags wrapper */
+    const tagWrapper = article.querySelector(optArticleTagsSelector);
+    console.log(tagWrapper);
+
+    /* 4. make html variable with empty string */
+    let tagHtml = "";
+
+    /* 5. get tags from data-tags attribute */
+    const articleTags = article.getAttribute("data-tags");
+    console.log(articleTags);
+
+    /* 6. split tags into array */
+    const articleTagsArray = articleTags.split(' ');
+    console.log(articleTagsArray);
+    
+    /* 5. START LOOP: for each tag */
+    for (let tag of articleTagsArray){
+    console.log(tag);
+
+    /* 6. generate HTML of the link */
+   const tagLinkHTML ='<li><a href="#tag-' + tag + '"><span>' + tag + "</span></a></li>";
+  console.log(tagLinkHTML);
+
+    /* 7. add generated code to html variable */
+    tagHtml = tagHtml + tagLinkHTML;
+
+    /* 8.  END LOOP: for each tag */
+    }
+    /* 9. insert HTML of all the links into the tags wrapper */
+    tagWrapper.innerHTML = tagHtml;
+    console.log(tagWrapper);
+    /* 10. END LOOP: for every article: */
+  }
+}
+
+generateTags();
