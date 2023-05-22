@@ -226,7 +226,7 @@ function authorClickHandler(event) {
   /*  START LOOP: for each active tag link */
   for (const author of activeAuthors) {
     /* remove class active */
-    author.classList.remove("active"); // remove class active from link
+    author.classList.remove("active"); 
     /*  END LOOP: for each active tag link */
   }
   /*  Find links with author */
