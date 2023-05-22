@@ -90,7 +90,13 @@ function generateTitleLinks(customSelector = "") {
 generateTitleLinks();
 
 function generateTags() {
+  /* [NEW] create a new variable allTags with an empty array */
+  // if i not found tag i arrey i create new one and add to arrey
+
+  /// let allTags = [];
+
   /* 1. find all articles */
+
   const articles = document.querySelectorAll(optArticleSelector);
   console.log(articles);
 
@@ -106,6 +112,7 @@ function generateTags() {
     let tagHtml = "";
 
     /* 5. get tags from data-tags attribute */
+    // for each article found his tags
     const articleTags = article.getAttribute("data-tags");
     console.log(articleTags);
 
@@ -118,12 +125,19 @@ function generateTags() {
       console.log(tag);
 
       /* 6. generate HTML of the link */
+      // for each founded tags from (5.) is generated LINK HTML code
       const tagLinkHTML =
         '<li><a href="#tag-' + tag + '"><span>' + tag + "</span></a></li>";
       console.log(tagLinkHTML);
 
       /* 7. add generated code to html variable */
       tagHtml = tagHtml + tagLinkHTML;
+
+      /* [NEW] check if this link is NOT already in allTags array*/
+
+      ///if(allTags.indexOf(linkHTML) == -1){
+      /* [NEW] add generated code to allTags array */
+      /// allTags.push(linkHTML);
 
       /* 8.  END LOOP: for each tag */
     }
@@ -132,6 +146,13 @@ function generateTags() {
     console.log(tagWrapper);
     /* 10. END LOOP: for every article: */
   }
+  /* [NEW] find list of tags in right column */
+  ///const tagList = document.querySelector(optTagsListSelector);
+
+  /* [NEW] add html from allTags to tagList */
+  //I ADD TO TAGS LIST ALL LINKS IN ARRAY, I CONNECT THEM BY SPACE ' '
+  // ELEMENTS MUST BE OUTSIDE THE LOOP.
+  ///tagList.innerHTML = allTags.join(' ');
 }
 
 generateTags();
@@ -196,7 +217,7 @@ function generateAuthors() {
     const articleAuthors = article.getAttribute("data-author");
     console.log(articleAuthors);
     const linkHTML =
-      '<a href="#author ' +
+      '<a href="#author' +
       articleAuthors +
       '"><span>' +
       articleAuthors +
@@ -226,7 +247,7 @@ function authorClickHandler(event) {
   /*  START LOOP: for each active tag link */
   for (const author of activeAuthors) {
     /* remove class active */
-    author.classList.remove("active"); 
+    author.classList.remove("active");
     /*  END LOOP: for each active tag link */
   }
   /*  Find links with author */
