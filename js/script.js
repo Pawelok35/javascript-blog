@@ -88,38 +88,43 @@ function generateTitleLinks(customSelector = '') {
   }
 }
 generateTitleLinks();
+const params = {
+  max: 0,
+  min: 999999,
+};
+function calculateTagsParams(allTags) {
+ 
+  console.log(params);
+  for (let tag in allTags) {
+    if (allTags[tag] > params.max) {
+      params.max = allTags[tag];
+      console.log(allTags + ' is used');
+    }
+    if(allTags[tag] < params.min){
+      params.min = allTags[tag];
+      console.log(allTags + ' is used');
+    }
+    console.log(tag + ' is used ' + allTags[tag] + ' times');
+  }
+  return params;
+}
 
 function generateTags() {
-  const params = {
-    max: 0,
-    min: 999999,
-  };
-  console.log(params);
-  function calculateTagsParams() {
-    for (const tags in allTags) {
-      if (allTags[tags] < params.min) {
-        console.log(tags + ' is used');
-        params.min = allTags[tags];
-      }
-      if (allTags[tags] > params.max) {
-        params.max = allTags[tags];
-        console.log(tags + ' is used');
-      }
-    }
-    return params;
-  }
+  
+
   /* [NEW] create a new variable allTags with an empty object  */
-  //if i not found tag i arrey i create new one and add to arrey
+  //if i not found tag in arrey i create new one and add to arrey
 
   let allTags = {}; // Was [] ->  array | change on {} -> object
 
   /* 1. find all articles */
 
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(optArticleSelector); //przypisane elementu z uzyciem selektora  // szukam elementu o selektorze i przypisuje do stalej
   console.log(articles);
 
   /* 2. START LOOP: for every article: */
   for (let article of articles) {
+    // iteracja po kazdym elemencie z articles
     console.log(article);
 
     /* 3. find tags wrapper */
@@ -130,12 +135,12 @@ function generateTags() {
     let tagHtml = '';
 
     /* 5. get tags from data-tags attribute */
-    // for each article found his tags
-    const articleTags = article.getAttribute('data-tags');
+    // for each article I found his tags
+    const articleTags = article.getAttribute('data-tags'); // w obrembie elementu article szukam atrybutu
     console.log(articleTags);
 
     /* 6. split tags into array */
-    const articleTagsArray = articleTags.split(' ');
+    const articleTagsArray = articleTags.split(' '); // tablica wartosci  'cat dog'   ['cat', 'dog']  -> elementy tablicy
     console.log(articleTagsArray);
 
     /* 5. START LOOP: for each tag */
@@ -143,28 +148,29 @@ function generateTags() {
       console.log(tag);
 
       /* 6. generate HTML of the link */
-      // for each founded tags from (5.) is generated LINK HTML code
+      // for each founded tags from (Point 5.) is generated LINK HTML code
       const tagLinkHTML =
-        '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
+        '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>'; // string ltory reprezentuje kawalek html
       console.log(tagLinkHTML);
 
       /* 7. add generated code to html variable */
-      tagHtml = tagHtml + tagLinkHTML;
+      tagHtml = tagHtml + tagLinkHTML; // dopisanie do starej wartosci nowa wartosc
       console.log(tagHtml);
 
       /* [NEW] check if this link is NOT already in allTags array*/
-      // No i must change code because now i use object (not array anymore)
+      // Now i must change code because now i use object (not array anymore)
       // in which (object) i want to count how many times appears tag
       if (!allTags[tag]) {
+        // czy w obiekcie alltags istnieje wratosc tag
         // it's use ! -> this is negation
         // so I read "If in allTags ARE NOT key tag"
 
         /* [NEW] add tag to allTags object */
         // now in allTags I do not have any tag yet. So counter = 1
-        allTags[tag] = 1;
+        allTags[tag] = 1; // [wlasciwosc]
       } else {
         // if exists this tag which I am looking for I rise counter +1
-        allTags[tag]++; // ++ MEANS +1 (rise +1)
+        allTags[tag] = allTags[tag] + 1; // ++ MEANS +1 (rise +1)
       }
       /* 8.  END LOOP: for each tag */
     }
