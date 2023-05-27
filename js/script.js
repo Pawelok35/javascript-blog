@@ -40,7 +40,9 @@ const optArticleSelector = '.post',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
   optArticleAuthorSelector = '.post-author',
-  optTagsListSelector = '.tags.list'; /// find list of tags in right column
+  optTagsListSelector = '.tags.list', /// find list of tags in right column
+  optCloudClassCount = 5,
+  optCloudClassPrefix = 'tag-size-';
 
 function generateTitleLinks(customSelector = '') {
   /* remove contents of titleList */
@@ -88,19 +90,19 @@ function generateTitleLinks(customSelector = '') {
   }
 }
 generateTitleLinks();
+
 const params = {
   max: 0,
   min: 999999,
 };
 function calculateTagsParams(allTags) {
- 
   console.log(params);
   for (let tag in allTags) {
     if (allTags[tag] > params.max) {
       params.max = allTags[tag];
       console.log(allTags + ' is used');
     }
-    if(allTags[tag] < params.min){
+    if (allTags[tag] < params.min) {
       params.min = allTags[tag];
       console.log(allTags + ' is used');
     }
@@ -109,9 +111,18 @@ function calculateTagsParams(allTags) {
   return params;
 }
 
-function generateTags() {
-  
+function calculateTagClass(count, params) {
+  // funkcja przyjmuje dwa argumenty
 
+  const normalizedCount = count - params.min; // roznica pomiedzy min a  + ile do nastepnego taga
+  const normalizedMax = params.max - params.min; // roznica pomiedzy max a min
+  const percentage = normalizedCount / normalizedMax; //
+  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1); // optCloudClassCount = maxymalna skala 1-5 czyli 5  optCloudClassCount-1 bo
+  console.log(classNumber);
+  return optCloudClassPrefix + classNumber;
+}
+
+function generateTags() {
   /* [NEW] create a new variable allTags with an empty object  */
   //if i not found tag in arrey i create new one and add to arrey
 
@@ -195,7 +206,11 @@ function generateTags() {
   /* [NEW] START LOOP: for each tag in allTags: */
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+    const tagLinkHTML =
+
+      '<li><a class=' + calculateTagClass(allTags[tag], tagsParams) + '</li>';
+    console.log('tagLinkHTML:', tagLinkHTML);
+    allTagsHTML += tagLinkHTML;
     // += operator which i use to add new link to allTagsHtml
 
     /* [NEW] END LOOP: for each tag in allTags: */
