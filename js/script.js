@@ -208,7 +208,8 @@ function generateTags() {
     /* [NEW] generate code of a link and add it to allTagsHTML */
     const tagLinkHTML =
 
-      '<li><a class=' + calculateTagClass(allTags[tag], tagsParams) + '</li>';
+      '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
+      
     console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML += tagLinkHTML;
     // += operator which i use to add new link to allTagsHtml
