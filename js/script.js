@@ -42,7 +42,8 @@ const optArticleSelector = '.post',
   optArticleAuthorSelector = '.post-author',
   optTagsListSelector = '.tags.list', /// find list of tags in right column
   optCloudClassCount = 5,
-  optCloudClassPrefix = 'tag-size-';
+  optCloudClassPrefix = 'tag-size-',
+  optAuthorsListSelector = '.authors.list';
 
 function generateTitleLinks(customSelector = '') {
   /* remove contents of titleList */
@@ -118,7 +119,7 @@ function calculateTagClass(count, params) {
   const normalizedMax = params.max - params.min; // roznica pomiedzy max a min
   const percentage = normalizedCount / normalizedMax; //
   const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1); // optCloudClassCount = maxymalna skala 1-5 czyli 5  optCloudClassCount-1 bo
-  console.log(classNumber);
+
   return optCloudClassPrefix + classNumber;
 }
 
@@ -207,9 +208,14 @@ function generateTags() {
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
     const tagLinkHTML =
+      '<li><a class="' +
+      calculateTagClass(allTags[tag], tagsParams) +
+      '" href="#tag-' +
+      tag +
+      '"><span>' +
+      tag +
+      '</span></a></li>';
 
-      '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
-      
     console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML += tagLinkHTML;
     // += operator which i use to add new link to allTagsHtml
@@ -271,6 +277,8 @@ generateTags();
 addClickListenersToTags();
 
 function generateAuthors() {
+  let allAuthors = {};
+  console.log(allAuthors);
   const articles = document.querySelectorAll(optArticleSelector);
   console.log(articles);
 
@@ -280,6 +288,7 @@ function generateAuthors() {
     const authorWrapper = article.querySelector(optArticleAuthorSelector);
     console.log(authorWrapper);
     const articleAuthors = article.getAttribute('data-author');
+
     console.log(articleAuthors);
     const linkHTML =
       '<a href="#author' +
@@ -290,7 +299,27 @@ function generateAuthors() {
     console.log(linkHTML);
     authorWrapper.innerHTML = linkHTML;
     console.log(authorWrapper);
+
+    if (!allAuthors[articleAuthors]) {
+      allAuthors[articleAuthors] = 1;
+    } else {
+      allAuthors[articleAuthors] = allAuthors[articleAuthors] + 1;
+    }
   }
+  const authorList = document.querySelector(optAuthorsListSelector);
+  console.log(authorList);
+  const authorsParams = allAuthors;
+  console.log(authorsParams);
+
+  /* [NEW] create variable for all links HTML code */
+  let allAuthorsHTML = '';
+
+  /* [NEW] START LOOP: for each tag in allTags: */
+  for (let author in allAuthors) {
+    allAuthorsHTML += author + ' (' + allAuthors[author] + ') ';
+  }
+
+  authorList.innerHTML = allAuthorsHTML;
 }
 generateAuthors();
 
